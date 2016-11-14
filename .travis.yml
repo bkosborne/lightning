@@ -86,11 +86,6 @@ install:
   # Execute database updates, if there are any.
   - drush updatedb --yes
 
-  # Execute manual update steps as needed.
-  # -----
-  - drush config-set --yes core.entity_form_display.node.page.default content.scheduled_update.type inline_entity_form_simple
-  # -----
-
 before_script:
   - drush runserver --default-server=builtin 8080 &>/dev/null &
   # Start Selenium and dump its ginormous log into a temporary file.
