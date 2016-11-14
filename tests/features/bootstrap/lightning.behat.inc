@@ -429,16 +429,10 @@ class LightningSubContext extends DrupalSubContextBase {
    * @When I schedule the node to be published at :when
    */
   public function schedulePublication($when) {
-    $this->minkContext->pressButton('Add new scheduled update');
-    $this->minkContext->iWaitForAjaxToFinish();
-
     list ($date, $time) = explode(' ', $when, 2);
-    $this->minkContext->fillField('scheduled_update[form][inline_entity_form][update_timestamp][0][value][date]', $date);
-    $this->minkContext->fillField('scheduled_update[form][inline_entity_form][update_timestamp][0][value][time]', $time);
-    $this->minkContext->selectOption('scheduled_update[form][inline_entity_form][field_moderation_state]', 'published');
-
-    $this->minkContext->pressButton('Create scheduled update');
-    $this->minkContext->iWaitForAjaxToFinish();
+    $this->minkContext->fillField('scheduled_update[0][inline_entity_form][update_timestamp][0][value][date]', $date);
+    $this->minkContext->fillField('scheduled_update[0][inline_entity_form][update_timestamp][0][value][time]', $time);
+    $this->minkContext->selectOption('scheduled_update[0][inline_entity_form][field_moderation_state]', 'published');
   }
 
 }

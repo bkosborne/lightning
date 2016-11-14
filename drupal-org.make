@@ -41,6 +41,7 @@ projects[inline_entity_form][type] = module
 projects[inline_entity_form][download][type] = git
 projects[inline_entity_form][download][url] = https://git.drupal.org/project/inline_entity_form
 projects[inline_entity_form][download][tag] = 8.x-1.0-beta1
+projects[inline_entity_form][patch][] = https://www.drupal.org/files/issues/2827230-5.patch
 projects[key_value][type] = module
 projects[key_value][download][type] = git
 projects[key_value][download][url] = https://git.drupal.org/project/key_value.git

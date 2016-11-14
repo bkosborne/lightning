@@ -1,7 +1,6 @@
 @lightning @api @workflow
 Feature: Scheduled updates to content
 
-  @javascript
   Scenario: Publishing a node that is scheduled to be published in the past
     Given I am logged in as a user with the administrator role
     And page content:
@@ -9,7 +8,7 @@ Feature: Scheduled updates to content
       | Foobar | /foobar | draft            |
     When I visit "/foobar"
     And I click "Edit draft"
-    And I schedule the node to be published at "09-19-1984 08:57:00AM"
+    And I schedule the node to be published at "1984-09-19 08:57:00"
     And I select "Needs Review" from "Moderation state"
     And I press "Save"
     And I run cron

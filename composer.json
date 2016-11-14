@@ -103,6 +103,10 @@
             "drupal/core": {
                 "2652138 - ImageFormatter does not support SVGs":
                 "https://www.drupal.org/files/issues/2652138-28.patch"
+            },
+            "drupal/inline_entity_form": {
+                "2827230 - IEF widgets should be collapsible":
+                "https://www.drupal.org/files/issues/2827230-5.patch"
             }
         }
     },
@@ -125,7 +129,7 @@
         "drupal/acquia_connector": "^8.1.1",
         "drupal/config_update": "^8.1.1",
         "drupal/features": "^8.3.0",
-        "drupal/inline_entity_form": "^8.1.0",
+        "drupal/inline_entity_form": "8.1.0-beta1",
         "drupal/metatag": "^8.1.0",
         "drupal/token": "^8.1.0",
         "drupal/pathauto": "^8.1.0",
