@@ -12,6 +12,19 @@ use Drupal\views\ViewExecutable;
 use Drupal\workbench_moderation\Entity\ModerationState;
 
 /**
+ * Implements hook_entity_type_alter().
+ */
+function lightning_workflow_entity_type_alter(array &$entity_types) {
+  if (\Drupal::moduleHandler()->moduleExists('multiversion')) {
+    // Scheduled updates always cause replication conflicts and therefore should
+    // not be under Multiversion control.
+    if (!\Drupal::state()->get('multiversion.migration_done.scheduled_update')) {
+      $entity_types['scheduled_update']->set('multiversion', FALSE);
+    }
+  }
+}
+
+/**
  * Implements hook_inline_entity_form_entity_form_alter().
  */
 function lightning_workflow_inline_entity_form_entity_form_alter(array &$entity_form, FormStateInterface $form_state) {
