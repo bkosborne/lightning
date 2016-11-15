@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\lightning_workflow\ScheduledUpdateStorage;
 use Drupal\lightning_workflow\Plugin\views\field\NodeBulkForm;
 use Drupal\node\NodeTypeInterface;
 use Drupal\views\ViewExecutable;
@@ -15,12 +16,11 @@ use Drupal\workbench_moderation\Entity\ModerationState;
  * Implements hook_entity_type_alter().
  */
 function lightning_workflow_entity_type_alter(array &$entity_types) {
-  if (\Drupal::moduleHandler()->moduleExists('multiversion')) {
-    // Scheduled updates always cause replication conflicts and therefore should
-    // not be under Multiversion control.
-    if (!\Drupal::state()->get('multiversion.migration_done.scheduled_update')) {
-      $entity_types['scheduled_update']->set('multiversion', FALSE);
-    }
+  if (
+  \Drupal::moduleHandler()->moduleExists('multiversion') &&
+  \Drupal::service('multiversion.manager')->isEnabledEntityType($entity_types['scheduled_update'])
+  ) {
+    $entity_types['scheduled_update']->setHandlerClass('storage', ScheduledUpdateStorage::class);
   }
 }
 
