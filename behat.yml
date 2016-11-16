@@ -6,7 +6,10 @@ default:
       contexts:
         - Acquia\LightningExtension\Context\UndoContext
         - Acquia\LightningExtension\Context\DisplayModeContext
+        - Acquia\LightningExtension\Context\EntityContext
+        - Acquia\LightningExtension\Context\FieldUiContext
         - Acquia\LightningExtension\Context\MediaContext
+        - Acquia\LightningExtension\Context\PermissionsContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext

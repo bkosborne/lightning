@@ -141,7 +141,10 @@ function lightning_core_form_alter(array &$form, FormStateInterface $form_state)
   if ($form_object instanceof EntityFormInterface) {
     $entity = $form_object->getEntity();
 
-    if (($entity instanceof EntityDisplayModeInterface || $entity instanceof RoleInterface) && in_array($form_object->getOperation(), ['add', 'edit'])) {
+    // The form operations on which we can display the description field.
+    $supported_operations = ['default', 'add', 'edit'];
+
+    if (($entity instanceof EntityDisplayModeInterface || $entity instanceof RoleInterface) && in_array($form_object->getOperation(), $supported_operations)) {
       $form['description'] = [
         '#type' => 'textarea',
         '#title' => t('Description'),

@@ -2,7 +2,7 @@
 Feature: Video media assets
   A media asset representing an externally hosted video.
 
-  @javascript
+  @javascript @clean-entities
   Scenario: Creating a video from a YouTube URL
     Given I am logged in as a user with the media_creator role
     When I visit "/media/add/video"
@@ -11,10 +11,11 @@ Feature: Video media assets
     And I enter "The Pill Scene" for "Media name"
     And I press "Save and publish"
     Then I should be visiting a media entity
-    And I should see "The Pill Scene"
-    And I queue the latest media entity for deletion
+    And this media should exist:
+      | bundle | name           |
+      | video  | The Pill Scene |
 
-  @javascript
+  @javascript @clean-entities
   Scenario: Creating a video from a Vimeo URL
     Given I am logged in as a user with the media_creator role
     When I visit "/media/add/video"
@@ -23,8 +24,9 @@ Feature: Video media assets
     And I enter "Cache Rules Everything Around Me" for "Media name"
     And I press "Save and publish"
     Then I should be visiting a media entity
-    And I should see "Cache Rules Everything Around Me"
-    And I queue the latest media entity for deletion
+    And this media should exist:
+      | bundle | name                             |
+      | video  | Cache Rules Everything Around Me |
 
   Scenario: Viewing a video as an anonymous user
     Given video from embed code:

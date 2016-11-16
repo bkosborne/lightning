@@ -2,7 +2,7 @@
 Feature: Instagram media assets
   A media asset representing an Instagram post.
 
-  @javascript
+  @javascript @clean-entities
   Scenario: Creating an Instagram media entity
     Given I am logged in as a user with the media_creator role
     When I visit "/media/add/instagram"
@@ -11,8 +11,9 @@ Feature: Instagram media assets
     And I enter "Foo" for "Media name"
     And I press "Save and publish"
     Then I should be visiting a media entity
-    And I should see "Foo"
-    And I queue the latest media entity for deletion
+    And these media entities should exist:
+      | bundle    | name |
+      | instagram | Foo  |
 
   Scenario: Viewing an Instagram post as an anonymous user
     Given instagram media from embed code:

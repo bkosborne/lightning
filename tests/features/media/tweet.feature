@@ -2,7 +2,7 @@
 Feature: Twitter media assets
   A media asset representing a tweet.
 
-  @javascript
+  @javascript @clean-entities
   Scenario: Creating a tweet
     Given I am logged in as a user with the media_creator role
     When I visit "/media/add/tweet"
@@ -11,8 +11,9 @@ Feature: Twitter media assets
     And I enter "Foobaz" for "Media name"
     And I press "Save and publish"
     Then I should be visiting a media entity
-    And I should see "Foobaz"
-    And I queue the latest media entity for deletion
+    And this media should exist:
+      | bundle | name   |
+      | tweet  | Foobaz |
 
   Scenario: Viewing a tweet as an anonymous user
     Given tweet media from embed code:
