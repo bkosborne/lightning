@@ -26,12 +26,10 @@ use Drupal\workbench_moderation\ModerationStateTransitionInterface as StateTrans
  * Implements hook_field_widget_info_alter().
  */
 function lightning_preview_field_widget_info_alter(array &$info) {
-  if (isset($info['path'])) {
-    $info['path']['class'] = \Drupal::moduleHandler()->moduleExists('pathauto')
-      // We cannot use ::class here, because if Pathauto doesn't exist, PHP will
-      // blow up if we try to import the class.
-      ? '\Drupal\lightning_preview\Plugin\Field\FieldWidget\PathautoWidget'
-      : PathWidget::class;
+  if (isset($info['path']) && \Drupal::moduleHandler()->moduleExists('pathauto')) {
+    // We cannot refer to PathautoWidget::class directly because if Pathauto is
+    // not enabled, PHP will blow up if we try to import the class.
+    lightning_core_override_plugin_class($info['path'], '\Drupal\lightning_preview\Plugin\Field\FieldWidget\PathautoWidget', PathWidget::class);
   }
 }
 

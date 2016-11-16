@@ -25,12 +25,11 @@ use Drupal\user\RoleInterface;
 function lightning_core_help($route_name, RouteMatchInterface $route_match) {
   $matched = [];
   // Parse the route name to figure out what display mode we're looking at:
-  //
-  // 0 = entire string
-  // 1 = view || form
-  // 2 = entity type
-  // 3 = view_mode || form_mode
-  // 4 = view || form
+  // Match #0 is the entire string.
+  // Match #1 is either 'view' or 'form'.
+  // Match #2 is the entity type ID.
+  // Match #3 is either 'view_mode' or 'form_mode'.
+  // Match #4 is either 'view' or 'form'.
   $expr = '/^entity\.entity_(view|form)_display\.([a-z_]+)\.((view|form)_mode)$/';
 
   if (preg_match($expr, $route_name, $matched)) {
@@ -83,6 +82,25 @@ function array_reorder(array &$values, array $keys) {
   uksort($values, function ($a, $b) use ($keys) {
     return array_search($a, $keys) - array_search($b, $keys);
   });
+}
+
+/**
+ * Overrides a plugin class if it has not already been overridden.
+ *
+ * @param array $plugin_definition
+ *   The plugin definition, passed by reference.
+ * @param string $original_class
+ *   The plugin class to override.
+ * @param string $override_class
+ *   The override class.
+ */
+function lightning_core_override_plugin_class(array &$plugin_definition, $original_class, $override_class) {
+  // Trim off the leading backslash, if there is one.
+  $original_class = ltrim($original_class, '\\');
+
+  if ($plugin_definition['class'] == $original_class) {
+    $plugin_definition['class'] = $override_class;
+  }
 }
 
 /**
