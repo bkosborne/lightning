@@ -5,6 +5,7 @@ default:
         - %paths.base%/tests/features
       contexts:
         - Acquia\LightningExtension\Context\UndoContext
+        - Acquia\LightningExtension\Context\DisplayModeContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext
