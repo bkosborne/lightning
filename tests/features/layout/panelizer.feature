@@ -72,3 +72,12 @@ Feature: Panelizer
     And I should see "Region: left"
     And I should see "Region: right"
     Then I should not see "Region: middle"
+
+  Scenario: Describing panelized view modes to authors
+    Given I am logged in as a user with the administrator role
+    And I describe the node.full view mode:
+      """
+      Describing a view mode? AMAZUNG!
+      """
+    When I visit "/node/add/landing_page"
+    Then I should see "Describing a view mode? AMAZUNG!"

@@ -5,6 +5,7 @@
  * Contains \LightningSubContext.
  */
 
+use Acquia\LightningExtension\Context\UndoContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Mink\Exception\ElementNotFoundException;
@@ -439,6 +440,33 @@ class LightningSubContext extends DrupalSubContextBase {
 
     $this->minkContext->pressButton('Create scheduled update');
     $this->minkContext->iWaitForAjaxToFinish();
+  }
+
+  /**
+   * Sets a description on a view mode.
+   *
+   * @param string $view_mode_id
+   *   The view mode ID (e.g., node.full).
+   * @param \Behat\Gherkin\Node\PyStringNode $description
+   *   The description to set on the view mode.
+   *
+   * @When I describe the :view_mode_id view mode:
+   */
+  public function describeViewMode($view_mode_id, PyStringNode $description) {
+    $this->visitPath('/admin/structure/display-modes/view/manage/' . $view_mode_id);
+
+    $this->assertSession()->statusCodeEquals(200);
+    $field = $this->assertSession()->fieldExists('Description');
+
+    /** @var UndoContext $undo */
+    $undo = $this->getContext(UndoContext::class);
+    if ($undo) {
+      $original = new PyStringNode((array) $field->getValue(), 0);
+      $undo->push([$this, __FUNCTION__], $view_mode_id, $original);
+    }
+
+    $field->setValue($description->getRaw());
+    $this->minkContext->pressButton('Save');
   }
 
 }
