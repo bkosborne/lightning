@@ -2,6 +2,7 @@
 
 namespace Acquia\LightningExtension\Context;
 
+use Acquia\LightningExtension\FormTrait;
 use Behat\Gherkin\Node\PyStringNode;
 use Drupal\Component\Serialization\Yaml;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
@@ -11,6 +12,8 @@ use Drupal\DrupalExtension\Context\MinkContext;
  * A context for interacting with the Field UI generically.
  */
 class FieldUiContext extends DrupalSubContextBase {
+
+  use FormTrait;
 
   /**
    * The Mink context.
@@ -43,26 +46,26 @@ class FieldUiContext extends DrupalSubContextBase {
    */
   public function createField($field_type, PyStringNode $settings) {
     $this->minkContext->clickLink('Add field');
-    $this->minkContext->fillField('new_storage_type', $field_type);
+    $this->minkContext->selectOption('new_storage_type', $field_type);
 
     $settings = Yaml::decode($settings->getRaw());
 
     foreach ($settings['storage'] as $field => $value) {
-      $this->minkContext->fillField($field, $value);
+      $this->setValue($field, $value);
     }
     sleep(2);
     $this->minkContext->pressButton('Save and continue');
 
     if (isset($settings['storage_settings'])) {
       foreach ($settings['storage_settings'] as $field => $value) {
-        $this->minkContext->fillField($field, $value);
+        $this->setValue($field, $value);
       }
     }
     $this->minkContext->pressButton('Save field settings');
 
     if (isset($settings['field_settings'])) {
       foreach ($settings['storage_settings'] as $field => $value) {
-        $this->minkContext->fillField($field, $value);
+        $this->setValue($field, $value);
       }
     }
     $this->minkContext->pressButton('Save settings');
