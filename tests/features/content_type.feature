@@ -65,7 +65,6 @@ Feature: Lightning Content Types
     Then "Action" should not have a "node_publish_action" option
     And "Action" should not have a "node_unpublish_action" option
 
-  @test
   Scenario: Describing a view mode
     Given I am logged in as a user with the "access administration pages,administer display modes,administer node display" permissions
     And a node view mode:
